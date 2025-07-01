@@ -1,1 +1,195 @@
-# RUBY
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Para mi Ruby ❤️</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #000000, #4a0080, #000000, #8b00ff, #000000);
+            background-size: 400% 400%;
+            animation: gradientShift 10s ease infinite;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: Arial, sans-serif;
+            color: white;
+        }
+        
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        .container {
+            text-align: center;
+            padding: 20px;
+            max-width: 600px;
+            width: 90%;
+        }
+        
+        .message-card {
+            background: rgba(75, 0, 130, 0.3);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 8px 32px rgba(138, 43, 226, 0.3);
+            border: 1px solid rgba(138, 43, 226, 0.5);
+        }
+        
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 30px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        #currentPhrase {
+            font-size: 1.5em;
+            margin: 30px 0;
+            min-height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            line-height: 1.4;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 10px;
+            background: rgba(138, 43, 226, 0.3);
+            border-radius: 5px;
+            margin: 30px 0;
+            overflow: hidden;
+        }
+        
+        #progress {
+            height: 100%;
+            background: linear-gradient(90deg, #ff006e, #ff4458);
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+        
+        #nextBtn {
+            background: linear-gradient(135deg, #ff006e, #ff4458);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.2em;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255, 0, 110, 0.4);
+            font-weight: bold;
+        }
+        
+        #nextBtn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 0, 110, 0.6);
+        }
+        
+        #heartContainer {
+            display: none;
+            text-align: center;
+        }
+        
+        .neon-heart {
+            font-size: 120px;
+            animation: heartbeat 1.5s ease-in-out infinite;
+        }
+        
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+        
+        .final-message {
+            font-size: 2em;
+            margin-top: 20px;
+            line-height: 1.5;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .heart-glow {
+            color: #ff0040;
+            text-shadow: 
+                0 0 20px #ff006e,
+                0 0 40px #ff006e,
+                0 0 60px #ff0040,
+                0 0 80px #ff0040;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="message-card" id="messageCard">
+            <h1>Un mensaje especial para ti ✨</h1>
+            
+            <div id="currentPhrase">Haz clic en el botón para empezar...</div>
+            
+            <div class="progress-bar">
+                <div id="progress"></div>
+            </div>
+            
+            <button id="nextBtn" onclick="nextPhrase()">Comenzar 💝</button>
+        </div>
+        
+        <div id="heartContainer">
+            <div class="neon-heart heart-glow">❤️</div>
+            <div class="final-message">
+                TE AMO MI RUBY<br>
+                Eres la mejor mi niña hermosa<br>
+                Nunca te rindas<br>
+                Yo estaré siempre para ti 💕
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        let currentIndex = -1;
+        const phrases = [
+            "Eres tan linda que las estrellas se ponen celosas de tu brillo 🌟",
+            "Tu sonrisa ilumina mi camino incluso en los días más oscuros ☀️",
+            "Cada día a tu lado es una nueva aventura llena de magia ✨",
+            "Tu belleza no solo está en tu rostro, sino en tu hermoso corazón 💕",
+            "Eres mi luz, mi guía, mi todo 🌙",
+            "Contigo el mundo es más bonito y colorido 🌈",
+            "Tu presencia hace que todo tenga sentido 🦋",
+            "Eres la razón por la que creo en la magia del amor 💫"
+        ];
+        
+        function nextPhrase() {
+            currentIndex++;
+            
+            if (currentIndex < phrases.length) {
+                // Mostrar la frase actual
+                document.getElementById('currentPhrase').innerHTML = phrases[currentIndex];
+                
+                // Actualizar la barra de progreso
+                const progress = ((currentIndex + 1) / phrases.length) * 100;
+                document.getElementById('progress').style.width = progress + '%';
+                
+                // Cambiar el texto del botón
+                if (currentIndex === 0) {
+                    document.getElementById('nextBtn').textContent = 'Siguiente mensaje 💝';
+                }
+                
+                if (currentIndex === phrases.length - 1) {
+                    document.getElementById('nextBtn').textContent = 'Ver mi mensaje final ❤️';
+                }
+            } else {
+                // Mostrar el corazón final
+                document.getElementById('messageCard').style.display = 'none';
+                document.getElementById('heartContainer').style.display = 'block';
+            }
+        }
+    </script>
+</body>
+</html>
